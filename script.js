@@ -3,37 +3,38 @@ const timeForm = document.getElementById("timeForm");
 timeForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // Get elements
-  let startOne = document.getElementById("startOne").value;
-  let endOne = document.getElementById("endOne").value;
-  let startTwo = document.getElementById("startTwo").value;
-  let endTwo = document.getElementById("endTwo").value;
+  const startOne = document.getElementById("startOne").value;
+  const endOne = document.getElementById("endOne").value;
+  const startTwo = document.getElementById("startTwo").value;
+  const endTwo = document.getElementById("endTwo").value;
 
-  const startOneTime = startOne.split(":");
-  const endOneTime = endOne.split(":");
-  const startTwoTime = startTwo.split(":");
-  const endTwoTime = endTwo.split(":");
+  const startDate = new Date();
 
-  // Convert to milliseconds
-  startOneTime[0] = startOneTime[0] * 60 * 1000;
-  startOneTime[1] = startOneTime[1] * 1000;
-  endOneTime[0] = endOneTime[0] * 60 * 1000;
-  endOneTime[1] = endOneTime[1] * 1000;
-  startTwoTime[0] = startTwoTime[0] * 60 * 1000;
-  startTwoTime[1] = startTwoTime[1] * 1000;
-  endTwoTime[0] = endTwoTime[0] * 60 * 1000;
-  endTwoTime[1] = endTwoTime[1] * 1000;
+  const startTimeOne = new Date(startDate);
+  const endTimeOne = new Date(startDate);
+  const startTimeTwo = new Date(startDate);
+  const endTimeTwo = new Date(startDate);
 
-  const totalTime = endOneTime - startOneTime + endTwoTime - startTwoTime;
+  startTimeOne.setHours(...startOne.split(":"));
+  endTimeOne.setHours(...endOne.split(":"));
+  startTimeTwo.setHours(...startTwo.split(":"));
+  endTimeTwo.setHours(...endTwo.split(":"));
+
+  const durationOne = endTimeOne - startTimeOne;
+  const durationTwo = endTimeTwo - startTimeTwo;
+
+  const totalDuration = durationOne + durationTwo;
 
   document.getElementById(
     "shiftOne"
-  ).innerHTML = `Shift One: ${startOneTime.toLocaleTimeString()} - ${endOneTime.toLocaleTimeString()}`;
+  ).textContent = `Shift One: ${startTimeOne.toLocaleTimeString()} - ${endTimeOne.toLocaleTimeString()}`;
   document.getElementById(
     "shiftTwo"
-  ).innerHTML = `Shift Two: ${startTwoTime.toLocaleTimeString()} - ${endTwoTime.toLocaleTimeString()}`;
+  ).textContent = `Shift Two: ${startTimeTwo.toLocaleTimeString()} - ${endTimeTwo.toLocaleTimeString()}`;
   document.getElementById(
     "totalTime"
-  ).innerHTML = `Total Time: ${totalTime.toLocaleTimeString()}`;
+  ).textContent = `Total Time: ${totalDuration}`;
+
   console.log(startOne);
   console.log(endOne);
   console.log(startTwo);
