@@ -3,10 +3,10 @@ const timeForm = document.getElementById("timeForm");
 timeForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // Get elements
-  const startOne = document.getElementById("startOne").value;
-  const endOne = document.getElementById("endOne").value;
-  const startTwo = document.getElementById("startTwo").value;
-  const endTwo = document.getElementById("endTwo").value;
+  const startOne = normalize(document.getElementById("startOne").value);
+  const endOne = normalize(document.getElementById("endOne").value);
+  const startTwo = normalize(document.getElementById("startTwo").value);
+  const endTwo = normalize(document.getElementById("endTwo").value);
 
   const startDate = new Date();
 
@@ -33,12 +33,8 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Shift Two: ${startTimeTwo.toLocaleTimeString()} - ${endTimeTwo.toLocaleTimeString()}`;
   document.getElementById(
     "totalTime"
-  ).textContent = `Total Time: ${totalDuration}`;
+  ).textContent = `Total Time: ${formatDuration(totalDuration)}`;
 
-  console.log(startOne);
-  console.log(endOne);
-  console.log(startTwo);
-  console.log(endTwo);
   console.log("Submitted");
 });
 
@@ -50,12 +46,12 @@ function normalize(inputTime) {
   }
   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
 }
+function formatDuration(milliseconds) {
+  const hours = Math.floor(milliseconds / 3600000);
+  const remainingMilliseconds = milliseconds % 3600000;
+  const minutes = Math.floor(remainingMilliseconds / 60000);
 
-const inputTime1 = "0500";
-const inputTime2 = "1000";
-
-const startTime1 = normalize(inputTime1);
-const endTime1 = normalize(inputTime2);
-
-console.log(startTime1);
-console.log(endTime1);
+  return `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}`;
+}
