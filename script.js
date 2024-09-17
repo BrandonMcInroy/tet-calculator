@@ -41,3 +41,21 @@ timeForm.addEventListener("submit", (e) => {
   console.log(endTwo);
   console.log("Submitted");
 });
+
+function normalize(inputTime) {
+  const cleanedTime = inputTime.replace(":", "");
+
+  if (cleanedTime.length < 4) {
+    return cleanedTime.padStart(4, "0");
+  }
+  return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
+}
+
+const inputTime1 = "0500";
+const inputTime2 = "1000";
+
+const startTime1 = normalize(inputTime1);
+const endTime1 = normalize(inputTime2);
+
+console.log(startTime1);
+console.log(endTime1);
