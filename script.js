@@ -8,6 +8,8 @@ timeForm.addEventListener("submit", (e) => {
   const startTwo = normalize(document.getElementById("startTwo").value);
   const endTwo = normalize(document.getElementById("endTwo").value);
 
+  console.log(startTwo, endTwo);
+
   const startDate = new Date();
 
   const startTimeOne = new Date(startDate);
@@ -34,7 +36,7 @@ timeForm.addEventListener("submit", (e) => {
     "shiftOne"
   ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}`;
 
-  if (startTwo && endTwo) {
+  if (startTwo.trim() && endTwo.trim()) {
     document.getElementById(
       "shiftTwo"
     ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}`;
