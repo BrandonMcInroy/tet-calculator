@@ -52,6 +52,9 @@ timeForm.addEventListener("submit", (e) => {
 });
 
 function normalize(inputTime) {
+  if (!inputTime) {
+    return "";
+  }
   const cleanedTime = inputTime.replace(":", "");
 
   if (cleanedTime.length < 4) {
