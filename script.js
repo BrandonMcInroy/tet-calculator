@@ -33,6 +33,9 @@ timeForm.addEventListener("submit", (e) => {
   const durationTwo = endTimeTwo - startTimeTwo;
 
   const totalDuration = durationOne + durationTwo;
+  const totalDurationFormatted = formatDuration(totalDuration);
+  console.log(totalDurationFormatted);
+
   console.log(durationOne, durationTwo);
   console.log(totalDuration);
 
@@ -58,10 +61,12 @@ timeForm.addEventListener("submit", (e) => {
 
   console.log("Submitted");
 
-  const remainingDriveHours = maxDriveHours - totalDuration;
-  document.getElementById("allowOt").textContent = `Allow OT: ${formatDuration(
-    remainingDriveHours
-  )} hours`;
+  const remainingDriveHours =
+    maxDriveHours - parseFloat(totalDurationFormatted);
+  document.getElementById(
+    "allowOt"
+  ).textContent = `Allow OT: ${remainingDriveHours.toFixed(2)}
+   hours`;
 
   // const remainingDriveHours = calculateRemainingHours(
   //   totalDuration,
