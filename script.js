@@ -1,4 +1,6 @@
 const timeForm = document.getElementById("timeForm");
+const maxDutyHours = 14;
+const maxDriveHours = 13;
 
 timeForm.addEventListener("submit", (e) => {
   e.preventDefault();
