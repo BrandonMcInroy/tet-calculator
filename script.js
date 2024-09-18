@@ -34,12 +34,16 @@ timeForm.addEventListener("submit", (e) => {
 
   document.getElementById(
     "shiftOne"
-  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}`;
+  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDuration(
+    durationOne
+  )}`;
 
   if (startTwo.trim() && endTwo.trim()) {
     document.getElementById(
       "shiftTwo"
-    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}`;
+    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}, Duration: ${formatDuration(
+      durationTwo
+    )}`;
   } else {
     document.getElementById("shiftTwo").textContent = `Shift Two: N/A`;
   }
