@@ -93,3 +93,15 @@ function formatTimeWithoutSeconds(date) {
   const formattedTime = timeString.replace(/:\d{2} /, "");
   return formattedTime;
 }
+function formatDecimalHoursToHHMM(decimalHours) {
+  const wholeHours = Math.floor(decimalHours);
+  const decimalMinutes = (decimalHours - wholeHours) * 60;
+  const formattedMinutes = Math.round(decimalMinutes);
+
+  const minutesString = formattedMinutes.toString().padStart(2, "0");
+  return `${wholeHours}:${minutesString}`;
+}
+
+const decimalHours = 7.5;
+const formattedHours = formatDecimalHoursToHHMM(decimalHours);
+console.log(formattedHours);
