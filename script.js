@@ -57,6 +57,11 @@ timeForm.addEventListener("submit", (e) => {
   console.log("Submitted");
 });
 
+const remainingDriveHours = maxDriveHours - totalDuration;
+document.getElementById(
+  "allowOt"
+).textContent = `Allow OT: ${remainingDriveHours} hours`;
+
 function normalize(inputTime) {
   if (!inputTime) {
     return "";
