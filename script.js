@@ -61,19 +61,11 @@ timeForm.addEventListener("submit", (e) => {
 
   console.log("Submitted");
 
-  const remainingDriveHours =
-    maxDriveHours - parseFloat(totalDurationFormatted);
+  const remainingDriveHours = maxDriveHours - totalDurationFormatted;
   document.getElementById(
     "allowOt"
   ).textContent = `Allow OT: ${remainingDriveHours.toFixed(2)}
    hours`;
-
-  // const remainingDriveHours = calculateRemainingHours(
-  //   totalDuration,
-  //   maxDriveHours
-  // );
-
-  // console.log(`Availible for OT: ${formatDuration(remainingDriveHours)} hours`);
 });
 
 function normalize(inputTime) {
@@ -91,10 +83,9 @@ function formatDuration(milliseconds) {
   const hours = Math.floor(milliseconds / 3600000);
   const remainingMilliseconds = milliseconds % 3600000;
   const minutes = Math.floor(remainingMilliseconds / 60000);
+  const decimalHours = minutes / 60;
 
-  return `${hours.toString().padStart(2, "0")}:${minutes
-    .toString()
-    .padStart(2, "0")}`;
+  return hours + decimalHours;
 }
 
 function formatTimeWithoutSeconds(date) {
@@ -102,7 +93,3 @@ function formatTimeWithoutSeconds(date) {
   const formattedTime = timeString.replace(/:\d{2} /, "");
   return formattedTime;
 }
-
-// function calculateRemainingHours(totalDuration, maxDriveHours) {
-//   return maxDriveHours - totalDuration;
-// }
