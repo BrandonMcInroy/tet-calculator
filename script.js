@@ -33,6 +33,8 @@ timeForm.addEventListener("submit", (e) => {
   const durationTwo = endTimeTwo - startTimeTwo;
 
   const totalDuration = durationOne + durationTwo;
+  console.log(durationOne, durationTwo);
+  console.log(totalDuration);
 
   document.getElementById(
     "shiftOne"
@@ -55,12 +57,19 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Total Time: ${formatDuration(totalDuration)}`;
 
   console.log("Submitted");
-});
 
-const remainingDriveHours = maxDriveHours - totalDuration;
-document.getElementById(
-  "allowOt"
-).textContent = `Allow OT: ${remainingDriveHours} hours`;
+  const remainingDriveHours = maxDriveHours - totalDuration;
+  document.getElementById("allowOt").textContent = `Allow OT: ${formatDuration(
+    remainingDriveHours
+  )} hours`;
+
+  // const remainingDriveHours = calculateRemainingHours(
+  //   totalDuration,
+  //   maxDriveHours
+  // );
+
+  // console.log(`Availible for OT: ${formatDuration(remainingDriveHours)} hours`);
+});
 
 function normalize(inputTime) {
   if (!inputTime) {
@@ -88,3 +97,7 @@ function formatTimeWithoutSeconds(date) {
   const formattedTime = timeString.replace(/:\d{2} /, "");
   return formattedTime;
 }
+
+// function calculateRemainingHours(totalDuration, maxDriveHours) {
+//   return maxDriveHours - totalDuration;
+// }
