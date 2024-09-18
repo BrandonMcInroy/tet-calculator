@@ -33,9 +33,15 @@ timeForm.addEventListener("submit", (e) => {
   document.getElementById(
     "shiftOne"
   ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}`;
-  document.getElementById(
-    "shiftTwo"
-  ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}`;
+
+  if (startTwo && endTwo) {
+    document.getElementById(
+      "shiftTwo"
+    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}`;
+  } else {
+    document.getElementById("shiftTwo").textContent = `Shift Two: N/A`;
+  }
+
   document.getElementById(
     "totalTime"
   ).textContent = `Total Time: ${formatDuration(totalDuration)}`;
