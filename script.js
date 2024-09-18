@@ -9,7 +9,6 @@ timeForm.addEventListener("submit", (e) => {
   const endTwo = normalize(document.getElementById("endTwo").value);
 
   const startDate = new Date();
-  const formattedTime = formatTimeWithoutSeconds(startDate);
 
   const startTimeOne = new Date(startDate);
   const endTimeOne = new Date(startDate);
@@ -21,6 +20,11 @@ timeForm.addEventListener("submit", (e) => {
   startTimeTwo.setHours(...startTwo.split(":"));
   endTimeTwo.setHours(...endTwo.split(":"));
 
+  const startTimeOneFormatted = formatTimeWithoutSeconds(startTimeOne);
+  const endTimeOneFormatted = formatTimeWithoutSeconds(endTimeOne);
+  const startTimeTwoFormatted = formatTimeWithoutSeconds(startTimeTwo);
+  const endTimeTwoFormatted = formatTimeWithoutSeconds(endTimeTwo);
+
   const durationOne = endTimeOne - startTimeOne;
   const durationTwo = endTimeTwo - startTimeTwo;
 
@@ -28,10 +32,10 @@ timeForm.addEventListener("submit", (e) => {
 
   document.getElementById(
     "shiftOne"
-  ).textContent = `Shift One: ${`startTimeOne: ${formattedTime}`} - ${endTimeOne.toLocaleTimeString()}`;
+  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}`;
   document.getElementById(
     "shiftTwo"
-  ).textContent = `Shift Two: ${startTimeTwo.toLocaleTimeString()} - ${endTimeTwo.toLocaleTimeString()}`;
+  ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}`;
   document.getElementById(
     "totalTime"
   ).textContent = `Total Time: ${formatDuration(totalDuration)}`;
@@ -59,6 +63,6 @@ function formatDuration(milliseconds) {
 
 function formatTimeWithoutSeconds(date) {
   const timeString = date.toLocaleTimeString();
-  const formattedTime = timeString.replace(/:\d{2} (AM|PM)/, "");
+  const formattedTime = timeString.replace(/:\d{2} /, "");
   return formattedTime;
 }
