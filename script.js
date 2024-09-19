@@ -34,22 +34,20 @@ timeForm.addEventListener("submit", (e) => {
 
   const totalDuration = durationOne + durationTwo;
   const totalDurationFormatted = formatDuration(totalDuration);
-  console.log(totalDurationFormatted);
-
-  console.log(durationOne, durationTwo);
-  console.log(totalDuration);
+  const durationOneFormatted = formatDuration(durationOne);
+  const durationTwoFormatted = formatDuration(durationTwo);
 
   document.getElementById(
     "shiftOne"
-  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDuration(
-    durationOne
+  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDecimalHoursToHHMM(
+    durationOneFormatted
   )}`;
 
   if (startTwo.trim() && endTwo.trim()) {
     document.getElementById(
       "shiftTwo"
-    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}, Duration: ${formatDuration(
-      durationTwo
+    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}, Duration: ${formatDecimalHoursToHHMM(
+      durationTwoFormatted
     )}`;
   } else {
     document.getElementById("shiftTwo").textContent = `Shift Two: N/A`;
@@ -57,15 +55,14 @@ timeForm.addEventListener("submit", (e) => {
 
   document.getElementById(
     "totalTime"
-  ).textContent = `Total Time: ${formatDuration(totalDuration)}`;
-
-  console.log("Submitted");
+  ).textContent = `Total Time: ${formatDecimalHoursToHHMM(
+    totalDurationFormatted
+  )}`;
 
   const remainingDriveHours = maxDriveHours - totalDurationFormatted;
   document.getElementById(
     "allowOt"
-  ).textContent = `Allow OT: ${remainingDriveHours.toFixed(2)}
-   hours`;
+  ).textContent = `Allow OT: ${formatDecimalHoursToHHMM(remainingDriveHours)}`;
 });
 
 function normalize(inputTime) {
@@ -101,7 +98,3 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
-
-const decimalHours = 7.5;
-const formattedHours = formatDecimalHoursToHHMM(decimalHours);
-console.log(formattedHours);
