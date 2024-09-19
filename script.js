@@ -39,30 +39,34 @@ timeForm.addEventListener("submit", (e) => {
 
   document.getElementById(
     "shiftOne"
-  ).textContent = `Shift One: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDecimalHoursToHHMM(
+  ).textContent = `First piece details: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDecimalHoursToHHMM(
     durationOneFormatted
   )}`;
 
   if (startTwo.trim() && endTwo.trim()) {
     document.getElementById(
       "shiftTwo"
-    ).textContent = `Shift Two: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}, Duration: ${formatDecimalHoursToHHMM(
+    ).textContent = `Second piece details: ${startTimeTwoFormatted} - ${endTimeTwoFormatted}, Duration: ${formatDecimalHoursToHHMM(
       durationTwoFormatted
     )}`;
   } else {
-    document.getElementById("shiftTwo").textContent = `Shift Two: N/A`;
+    document.getElementById(
+      "shiftTwo"
+    ).textContent = `Second piece details: N/A`;
   }
 
   document.getElementById(
     "totalTime"
-  ).textContent = `Total Time: ${formatDecimalHoursToHHMM(
+  ).textContent = `Total shift time: ${formatDecimalHoursToHHMM(
     totalDurationFormatted
   )}`;
 
   const remainingDriveHours = maxDriveHours - totalDurationFormatted;
   document.getElementById(
     "allowOt"
-  ).textContent = `Allow OT: ${formatDecimalHoursToHHMM(remainingDriveHours)}`;
+  ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
+    remainingDriveHours
+  )}`;
 });
 
 function normalize(inputTime) {
