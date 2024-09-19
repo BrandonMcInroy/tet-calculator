@@ -65,12 +65,13 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
-  const earliestStartTime = maxDutyHours - totalDurationFormatted;
-  document.getElementById(
-    "earliestStart"
-  ).textContent = `Earliest start time: ${formatDecimalHoursToHHMM(
-    earliestStartTime
-  )}`;
+  // const earliestStartTime = maxDutyHours - totalDurationFormatted;
+  // document.getElementById(
+  //   "earliestStart"
+  // ).textContent = `Earliest start time: ${earliestStartTime}`;
+
+  const earliestStartTime = getEarliestStartTime(endTimeOne, endTimeTwo);
+  console.log(`Earliest start time: ${earliestStartTime}`);
 });
 
 function normalize(inputTime) {
@@ -106,4 +107,22 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
-function getEarliestStartTime() {}
+function getEarliestStartTime(endTimeOne, endTimeTwo) {
+  const endOne = new Date(endTimeOne);
+  const endTwo = new Date(endTimeTwo);
+
+  const durationOne = endOne - startDate;
+  const durationTwo = endTwo - startDate;
+
+  const totalDuration = durationOne + durationTwo;
+  const maxWorkHours = 14 * 60 * 60 * 1000;
+
+  const remainingTime = maxWorkHours - totalDuration;
+  const laterEndTime = Math.max(endOne, endTwo);
+
+  const earliestStartTime = new Date(laterEndTime.getTime() + remainingTime);
+  return earliestStartTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
