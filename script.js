@@ -65,6 +65,12 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
+  const earliestStartTime = maxDutyHours - totalDurationFormatted;
+  document.getElementById(
+    "earliestStart"
+  ).textContent = `Earliest start time: ${formatDecimalHoursToHHMM(
+    earliestStartTime
+  )}`;
 });
 
 function normalize(inputTime) {
@@ -100,3 +106,4 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
+function getEarliestStartTime() {}
