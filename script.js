@@ -108,8 +108,8 @@ function formatDecimalHoursToHHMM(decimalHours) {
   return `${wholeHours}:${minutesString}`;
 }
 function getEarliestStartTime(endTimeOne, endTimeTwo) {
-  const endOne = new Date(`2000-01-01T${endTimeOne}`);
-  const endTwo = new Date(`2000-01-01T${endTimeTwo}`);
+  const endOne = new Date(`${endTimeOne}`);
+  const endTwo = new Date(`${endTimeTwo}`);
 
   const durationOne = endOne - new Date(0);
   const durationTwo = endTwo - new Date(0);
@@ -120,11 +120,11 @@ function getEarliestStartTime(endTimeOne, endTimeTwo) {
   const remainingTime = maxWorkHours - totalDuration;
   const laterEndTime = Math.max(endOne, endTwo);
 
-  const earliestStartTime = new Date(laterEndTime.getTime() + remainingTime);
-  const formattedStartTime = earliestStartTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const earliestStartTime = new Date(laterEndTime + remainingTime);
+  const formattedStartTime = `${earliestStartTime.getHours()}:${earliestStartTime
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
 
   return formattedStartTime;
 }
