@@ -10,8 +10,6 @@ timeForm.addEventListener("submit", (e) => {
   const startTwo = normalize(document.getElementById("startTwo").value);
   const endTwo = normalize(document.getElementById("endTwo").value);
 
-  console.log(startTwo, endTwo);
-
   const startDate = new Date();
 
   const startTimeOne = new Date(startDate);
