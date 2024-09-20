@@ -65,13 +65,70 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
+
+  // Calculate the earliest possible start time based on maxDutyHours and end times
+  const earliestPossibleStartTime = new Date(endTimeTwo);
+  earliestPossibleStartTime.setHours(
+    earliestPossibleStartTime.getHours() - maxDutyHours
+  );
+
+  // Ensure the shift starts within the allowed time frame
+  if (startTimeOne < earliestPossibleStartTime) {
+    // Handle the case where the shift starts too early (e.g., display an error message)
+    document.getElementById(
+      "earliestStart"
+    ).textContent = `Shift starts too early`;
+  } else {
+    document.getElementById(
+      "earliestStart"
+    ).textContent = `Earliest start time: ${formatTimeWithoutSeconds(
+      earliestPossibleStartTime
+    )}`;
+  }
+  // Calculate the latest possible end time based on maxDutyHours
+  const latestPossibleEndTime = new Date(startTimeOne);
+  latestPossibleEndTime.setHours(
+    latestPossibleEndTime.getHours() + maxDutyHours
+  );
+
+  // Ensure the shift ends within maxDutyHours
+  if (
+    endTimeOne > latestPossibleEndTime ||
+    (endTimeTwo && endTimeTwo > latestPossibleEndTime)
+  ) {
+    // Handle the case where the shift exceeds maxDutyHours (e.g., display an error message)
+    document.getElementById(
+      "latestFinish"
+    ).textContent = `Shift exceeds maximum allowed time`;
+  } else {
+    document.getElementById(
+      "latestFinish"
+    ).textContent = `Latest finish time: ${formatTimeWithoutSeconds(
+      latestPossibleEndTime
+    )}`;
+  }
 });
 
+// function normalize(inputTime) {
+//   if (!inputTime) {
+//     return "";
+//   }
+//   const cleanedTime = inputTime.replace(":", "");
+
+//   if (cleanedTime.length < 4) {
+//     return cleanedTime.padStart(4, "0");
+//   }
+//   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
+// }
 function normalize(inputTime) {
   if (!inputTime) {
     return "";
   }
-  const cleanedTime = inputTime.replace(":", "");
+  let cleanedTime = inputTime.replace(":", "");
+  //Handle values greater than 2359
+  if (cleanedTime.length === 4) {
+    cleanedTime = (parseInt(cleanedTime) - 2400).toString().padStart(4, "0");
+  }
 
   if (cleanedTime.length < 4) {
     return cleanedTime.padStart(4, "0");
