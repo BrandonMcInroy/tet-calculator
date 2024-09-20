@@ -65,22 +65,6 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
-  // const earliestStartTime = maxDutyHours - totalDurationFormatted;
-  // document.getElementById(
-  //   "earliestStart"
-  // ).textContent = `Earliest start time: ${earliestStartTime}`;
-
-  const earliestStartTime = getEarliestStartTime(
-    startTimeOne,
-    endTimeOne,
-    endTimeTwo
-  );
-  console.log(`Earliest start time: ${earliestStartTime}`);
-
-  // Example usage
-  // const startTime = "09:00"; // 9 AM
-  const latestWorkTime = calculateLatestWorkTime(startTimeOne);
-  console.log("Latest possible work time:", latestWorkTime);
 });
 
 function normalize(inputTime) {
@@ -115,58 +99,4 @@ function formatDecimalHoursToHHMM(decimalHours) {
 
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
-}
-function getEarliestStartTime(startTimeOne, endTimeOne, endTimeTwo) {
-  const startTimeOneCopy = new Date(startTimeOne);
-  const totalDuration = endTimeTwo - startTimeOneCopy;
-  const maxWorkHours = 14 * 60 * 60 * 1000;
-
-  const remainingTime = maxWorkHours - totalDuration;
-  const earlierEndTime = Math.min(endTimeOne, endTimeTwo);
-
-  // Calculate the earliest start time by subtracting the remaining time from the earlier end time
-  const earliestStartTime = new Date(earlierEndTime - remainingTime);
-
-  // Ensure the earliest start time is within the maximum shift time (14 hours) from the start of the first shift
-  const maxShiftTime = startTimeOneCopy + 14 * 60 * 60 * 1000;
-  if (earliestStartTime < startTimeOneCopy) {
-    earliestStartTime = startTimeOneCopy;
-  } else if (earliestStartTime > maxShiftTime) {
-    earliestStartTime = maxShiftTime;
-  }
-
-  const formattedStartTime = `${earliestStartTime.getHours()}:${earliestStartTime
-    .getMinutes()
-    .toString()
-    .padStart(2, 0)}`;
-
-  return formattedStartTime;
-}
-function calculateLatestWorkTime(startDate) {
-  // Calculate end time based on maximum duty time
-  const dutyEndTime = new Date(startDate);
-  dutyEndTime.setHours(dutyEndTime.getHours() + 13);
-  if (dutyEndTime.getHours() > 23) {
-    dutyEndTime.setDate(dutyEndTime.getDate() + 1);
-    dutyEndTime.setHours(dutyEndTime.getHours() - 24);
-  }
-
-  // Calculate end time based on maximum shift time
-  const shiftEndTime = new Date(startDate);
-  shiftEndTime.setHours(shiftEndTime.getHours() + 14);
-  if (shiftEndTime.getHours() > 23) {
-    shiftEndTime.setDate(shiftEndTime.getDate() + 1);
-    shiftEndTime.setHours(shiftEndTime.getHours() - 24);
-  }
-
-  // Determine the latest possible work time
-  const latestEndTime = dutyEndTime < shiftEndTime ? dutyEndTime : shiftEndTime;
-
-  // Format the result
-  const formattedEndTime = latestEndTime.toLocaleTimeString([], {
-    hour12: true,
-    hourCycle: "h12",
-  });
-
-  return formattedEndTime;
 }
