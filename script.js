@@ -70,7 +70,11 @@ timeForm.addEventListener("submit", (e) => {
   //   "earliestStart"
   // ).textContent = `Earliest start time: ${earliestStartTime}`;
 
-  const earliestStartTime = getEarliestStartTime(endTimeOne, endTimeTwo);
+  const earliestStartTime = getEarliestStartTime(
+    startTimeOne,
+    endTimeOne,
+    endTimeTwo
+  );
   console.log(`Earliest start time: ${earliestStartTime}`);
 
   // Example usage
@@ -112,14 +116,24 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
-function getEarliestStartTime(endTimeOne, endTimeTwo) {
-  const totalDuration = endTimeTwo - startTimeOne;
+function getEarliestStartTime(earlyStartTimeOne, endTimeOne, endTimeTwo) {
+  const totalDuration = endTimeTwo - earlyStartTimeOne;
   const maxWorkHours = 14 * 60 * 60 * 1000;
 
   const remainingTime = maxWorkHours - totalDuration;
-  const laterEndTime = Math.max(endTimeOne, endTimeTwo);
+  const earlierEndTime = Math.min(endTimeOne, endTimeTwo);
 
-  const earliestStartTime = new Date(laterEndTime + remainingTime);
+  // Calculate the earliest start time by subtracting the remaining time from the earlier end time
+  const earliestStartTime = new Date(earlierEndTime - remainingTime);
+
+  // Ensure the earliest start time is within the maximum shift time (14 hours) from the start of the first shift
+  const maxShiftTime = earlyStartTimeOne + 14 * 60 * 60 * 1000;
+  if (earliestStartTime < earlyStartTimeOne) {
+    earliestStartTime = earlyStartTimeOne;
+  } else if (earliestStartTime > maxShiftTime) {
+    earliestStartTime = maxShiftTime;
+  }
+
   const formattedStartTime = `${earliestStartTime.getHours()}:${earliestStartTime
     .getMinutes()
     .toString()
