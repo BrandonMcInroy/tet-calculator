@@ -116,8 +116,9 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
-function getEarliestStartTime(earlyStartTimeOne, endTimeOne, endTimeTwo) {
-  const totalDuration = endTimeTwo - earlyStartTimeOne;
+function getEarliestStartTime(startTimeOne, endTimeOne, endTimeTwo) {
+  const startTimeOneCopy = new Date(startTimeOne);
+  const totalDuration = endTimeTwo - startTimeOneCopy;
   const maxWorkHours = 14 * 60 * 60 * 1000;
 
   const remainingTime = maxWorkHours - totalDuration;
@@ -127,9 +128,9 @@ function getEarliestStartTime(earlyStartTimeOne, endTimeOne, endTimeTwo) {
   const earliestStartTime = new Date(earlierEndTime - remainingTime);
 
   // Ensure the earliest start time is within the maximum shift time (14 hours) from the start of the first shift
-  const maxShiftTime = earlyStartTimeOne + 14 * 60 * 60 * 1000;
-  if (earliestStartTime < earlyStartTimeOne) {
-    earliestStartTime = earlyStartTimeOne;
+  const maxShiftTime = startTimeOneCopy + 14 * 60 * 60 * 1000;
+  if (earliestStartTime < startTimeOneCopy) {
+    earliestStartTime = startTimeOneCopy;
   } else if (earliestStartTime > maxShiftTime) {
     earliestStartTime = maxShiftTime;
   }
