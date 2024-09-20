@@ -72,6 +72,11 @@ timeForm.addEventListener("submit", (e) => {
 
   const earliestStartTime = getEarliestStartTime(endTimeOne, endTimeTwo);
   console.log(`Earliest start time: ${earliestStartTime}`);
+
+  // Example usage
+  // const startTime = "09:00"; // 9 AM
+  const latestWorkTime = calculateLatestWorkTime(startTimeOne);
+  console.log("Latest possible work time:", latestWorkTime);
 });
 
 function normalize(inputTime) {
@@ -108,23 +113,45 @@ function formatDecimalHoursToHHMM(decimalHours) {
   return `${wholeHours}:${minutesString}`;
 }
 function getEarliestStartTime(endTimeOne, endTimeTwo) {
-  const endOne = new Date(`${endTimeOne}`);
-  const endTwo = new Date(`${endTimeTwo}`);
-
-  const durationOne = endOne - new Date(0);
-  const durationTwo = endTwo - new Date(0);
-
-  const totalDuration = durationOne + durationTwo;
+  const totalDuration = endTimeTwo - startTimeOne;
   const maxWorkHours = 14 * 60 * 60 * 1000;
 
   const remainingTime = maxWorkHours - totalDuration;
-  const laterEndTime = Math.max(endOne, endTwo);
+  const laterEndTime = Math.max(endTimeOne, endTimeTwo);
 
   const earliestStartTime = new Date(laterEndTime + remainingTime);
   const formattedStartTime = `${earliestStartTime.getHours()}:${earliestStartTime
     .getMinutes()
     .toString()
-    .padStart(2, "0")}`;
+    .padStart(2, 0)}`;
 
   return formattedStartTime;
+}
+function calculateLatestWorkTime(startDate) {
+  // Calculate end time based on maximum duty time
+  const dutyEndTime = new Date(startDate);
+  dutyEndTime.setHours(dutyEndTime.getHours() + 13);
+  if (dutyEndTime.getHours() > 23) {
+    dutyEndTime.setDate(dutyEndTime.getDate() + 1);
+    dutyEndTime.setHours(dutyEndTime.getHours() - 24);
+  }
+
+  // Calculate end time based on maximum shift time
+  const shiftEndTime = new Date(startDate);
+  shiftEndTime.setHours(shiftEndTime.getHours() + 14);
+  if (shiftEndTime.getHours() > 23) {
+    shiftEndTime.setDate(shiftEndTime.getDate() + 1);
+    shiftEndTime.setHours(shiftEndTime.getHours() - 24);
+  }
+
+  // Determine the latest possible work time
+  const latestEndTime = dutyEndTime < shiftEndTime ? dutyEndTime : shiftEndTime;
+
+  // Format the result
+  const formattedEndTime = latestEndTime.toLocaleTimeString([], {
+    hour12: true,
+    hourCycle: "h12",
+  });
+
+  return formattedEndTime;
 }
