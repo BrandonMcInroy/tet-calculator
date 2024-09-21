@@ -157,3 +157,13 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
+function findEndOfShift(endOne, endTwo) {
+  let endOfShift; // Declare endOfShift variable
+
+  if (endTwo === "") {
+    endOfShift = endOne;
+  } else {
+    endOfShift = endTwo;
+  }
+  return endOfShift;
+}
