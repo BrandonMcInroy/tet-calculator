@@ -10,7 +10,12 @@ timeForm.addEventListener("submit", (e) => {
   const startTwo = normalize(document.getElementById("startTwo").value);
   const endTwo = normalize(document.getElementById("endTwo").value);
 
-  const startDate = new Date();
+  let startDate = new Date();
+  let timezoneOffset = new Date().getTimezoneOffset();
+  let pstOffset = -480;
+  let adjustedTime = new Date(
+    startDate.getTime() + (pstOffset + timezoneOffset) * 60 * 1000
+  );
 
   const startTimeOne = new Date(startDate);
   const endTimeOne = new Date(startDate);
@@ -72,6 +77,8 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
+  let pstDateTime = adjustedTime.toLocaleString("en-US", earliestStartTime);
+  console.log(pstDateTime);
   console.log(findEndOfShift(endOne, endTwo));
   console.log(earliestStartTime);
   console.log(earliestStartTimeFormatted);
@@ -141,11 +148,7 @@ function findEarliestStartTime(endTimeOne, endTimeTwo) {
   const endOfShift = findEndOfShift(endTimeOne, endTimeTwo);
   const earliestStartTime = endOfShift;
   earliestStartTime.setHours(earliestStartTime.getHours() - maxDutyHours);
-  const earliestStartTimeString = earliestStartTime.toLocaleTimeString(
-    "en-US",
-    { timeZone: "America/Vancouver" }
-  );
-  console.log(earliestStartTimeString);
+
   return earliestStartTime;
 }
 
