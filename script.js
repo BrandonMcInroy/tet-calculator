@@ -125,3 +125,4 @@ function findEndOfShift(endOne, endTwo) {
   }
   return endOfShift;
 }
+console.log(findEndOfShift("12:00", ""));
