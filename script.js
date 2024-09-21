@@ -15,21 +15,41 @@ timeForm.addEventListener("submit", (e) => {
   const startTimeOne = new Date(startDate);
   const endTimeOne = new Date(startDate);
   const startTimeTwo = new Date(startDate);
-  const endTimeTwoInput = "";
-  const endTimeTwo = endTimeTwoInput ? new Date(endTimeTwoInput) : null;
+  let endTimeTwo = null;
 
-  startTimeOne.setHours(...startOne.split(":"));
-  endTimeOne.setHours(...endOne.split(":"));
-  startTimeTwo.setHours(...startTwo.split(":"));
-  endTimeTwo.setHours(...endTwo.split(":"));
+  if (startOne) {
+    startTimeOne.setHours(...startOne.split(":"));
+  }
+  if (endOne) {
+    endTimeOne.setHours(...endOne.split(":"));
+  }
+  if (startTwo) {
+    startTimeTwo.setHours(...startTwo.split(":"));
+  }
+  if (endTwo) {
+    endTimeTwo = new Date(startDate);
+    endTimeTwo.setHours(...endTwo.split(":"));
+  }
 
   const startTimeOneFormatted = formatTimeWithoutSeconds(startTimeOne);
   const endTimeOneFormatted = formatTimeWithoutSeconds(endTimeOne);
   const startTimeTwoFormatted = formatTimeWithoutSeconds(startTimeTwo);
-  const endTimeTwoFormatted = formatTimeWithoutSeconds(endTimeTwo);
+  let endTimeTwoFormatted;
+
+  if (endTimeTwo) {
+    endTimeTwoFormatted = formatTimeWithoutSeconds(endTimeTwo);
+  } else {
+    endTimeTwoFormatted = "null";
+  }
 
   const durationOne = endTimeOne - startTimeOne;
-  const durationTwo = endTimeTwo - startTimeTwo;
+  let durationTwo;
+
+  if (endTimeTwoFormatted) {
+    durationTwo = endTimeTwo - startTimeTwo;
+  } else {
+    durationTwo = 0;
+  }
 
   const totalDuration = durationOne + durationTwo;
   const totalDurationFormatted = formatDuration(totalDuration);
