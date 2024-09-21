@@ -21,6 +21,8 @@ timeForm.addEventListener("submit", (e) => {
   endTimeOne.setHours(...endOne.split(":"));
   startTimeTwo.setHours(...startTwo.split(":"));
   endTimeTwo.setHours(...endTwo.split(":"));
+  console.log(startTimeOne);
+  console.log(endTimeOne);
 
   const startTimeOneFormatted = formatTimeWithoutSeconds(startTimeOne);
   const endTimeOneFormatted = formatTimeWithoutSeconds(endTimeOne);
@@ -34,6 +36,9 @@ timeForm.addEventListener("submit", (e) => {
   const totalDurationFormatted = formatDuration(totalDuration);
   const durationOneFormatted = formatDuration(durationOne);
   const durationTwoFormatted = formatDuration(durationTwo);
+
+  const result = testEarliestStartTime(endOne);
+  console.log("result:", result.toString());
 
   const earliestStartTime = findEarliestStartTime(endTimeOne, endTimeTwo);
   const latestFinishTime = findLatestFinishTime(startTimeOne);
@@ -72,9 +77,9 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
-
+  testEarliestStartTime(endOne);
   console.log(findEndOfShift(endOne, endTwo));
-  console.log(earliestStartTime);
+
   console.log(earliestStartTimeFormatted);
   console.log(latestFinishTimeFormatted);
 });
@@ -137,9 +142,10 @@ function findEndOfShift(endOne, endTwo) {
   }
   return endOfShift;
 }
+
 // Function to find the earliest start time based on the end times
-function findEarliestStartTime(endTimeOne, endTimeTwo) {
-  const endOfShift = findEndOfShift(endTimeOne, endTimeTwo);
+function findEarliestStartTime(endOne, endTwo) {
+  const endOfShift = findEndOfShift(endOne, endTwo);
   const earliestStartTime = endOfShift;
   earliestStartTime.setHours(earliestStartTime.getHours() - maxDutyHours);
 
