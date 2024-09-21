@@ -65,6 +65,7 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
+  console.log(findEndOfShift(endOne, endTwo));
 });
 
 function normalize(inputTime) {
@@ -125,4 +126,3 @@ function findEndOfShift(endOne, endTwo) {
   }
   return endOfShift;
 }
-console.log(findEndOfShift("12:00", ""));
