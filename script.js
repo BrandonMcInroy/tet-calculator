@@ -35,6 +35,13 @@ timeForm.addEventListener("submit", (e) => {
   const durationOneFormatted = formatDuration(durationOne);
   const durationTwoFormatted = formatDuration(durationTwo);
 
+  const earliestStartTime = findEarliestStartTime(endTimeOne, endTimeTwo);
+  const latestFinishTime = findLatestFinishTime(startTimeOne);
+
+  const earliestStartTimeFormatted =
+    formatTimeWithoutSeconds(earliestStartTime);
+  const latestFinishTimeFormatted = formatTimeWithoutSeconds(latestFinishTime);
+
   document.getElementById(
     "shiftOne"
   ).textContent = `First piece details: ${startTimeOneFormatted} - ${endTimeOneFormatted}, Duration: ${formatDecimalHoursToHHMM(
@@ -65,9 +72,10 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
-  // console.log(findEndOfShift(endOne, endTwo));
-  console.log(findEarliestStartTime(endTimeOne, endTimeTwo));
-  console.log(findLatestFinishTime(startTimeOne));
+  console.log(findEndOfShift(endOne, endTwo));
+  console.log(earliestStartTime);
+  console.log(earliestStartTimeFormatted);
+  console.log(latestFinishTimeFormatted);
 });
 
 function normalize(inputTime) {
@@ -133,6 +141,11 @@ function findEarliestStartTime(endTimeOne, endTimeTwo) {
   const endOfShift = findEndOfShift(endTimeOne, endTimeTwo);
   const earliestStartTime = endOfShift;
   earliestStartTime.setHours(earliestStartTime.getHours() - maxDutyHours);
+  const earliestStartTimeString = earliestStartTime.toLocaleTimeString(
+    "en-US",
+    { timeZone: "America/Vancouver" }
+  );
+  console.log(earliestStartTimeString);
   return earliestStartTime;
 }
 
