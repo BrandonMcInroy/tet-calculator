@@ -109,32 +109,32 @@ timeForm.addEventListener("submit", (e) => {
   }
 });
 
-// function normalize(inputTime) {
-//   if (!inputTime) {
-//     return "";
-//   }
-//   const cleanedTime = inputTime.replace(":", "");
-
-//   if (cleanedTime.length < 4) {
-//     return cleanedTime.padStart(4, "0");
-//   }
-//   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
-// }
 function normalize(inputTime) {
   if (!inputTime) {
     return "";
   }
-  let cleanedTime = inputTime.replace(":", "");
-  //Handle values greater than 2359
-  if (cleanedTime.length === 4) {
-    cleanedTime = (parseInt(cleanedTime) - 2400).toString().padStart(4, "0");
-  }
+  const cleanedTime = inputTime.replace(":", "");
 
   if (cleanedTime.length < 4) {
     return cleanedTime.padStart(4, "0");
   }
   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
 }
+// function normalize(inputTime) {
+//   if (!inputTime) {
+//     return "";
+//   }
+//   let cleanedTime = inputTime.replace(":", "");
+//   //Handle values greater than 2359
+//   if (cleanedTime.length === 4) {
+//     cleanedTime = (parseInt(cleanedTime) - 2400).toString().padStart(4, "0");
+//   }
+
+//   if (cleanedTime.length < 4) {
+//     return cleanedTime.padStart(4, "0");
+//   }
+//   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
+// }
 function formatDuration(milliseconds) {
   const hours = Math.floor(milliseconds / 3600000);
   const remainingMilliseconds = milliseconds % 3600000;
