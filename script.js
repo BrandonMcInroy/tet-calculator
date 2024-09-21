@@ -15,14 +15,13 @@ timeForm.addEventListener("submit", (e) => {
   const startTimeOne = new Date(startDate);
   const endTimeOne = new Date(startDate);
   const startTimeTwo = new Date(startDate);
-  const endTimeTwo = new Date(startDate);
+  const endTimeTwoInput = "";
+  const endTimeTwo = endTimeTwoInput ? new Date(endTimeTwoInput) : null;
 
   startTimeOne.setHours(...startOne.split(":"));
   endTimeOne.setHours(...endOne.split(":"));
   startTimeTwo.setHours(...startTwo.split(":"));
   endTimeTwo.setHours(...endTwo.split(":"));
-  console.log(startTimeOne);
-  console.log(endTimeOne);
 
   const startTimeOneFormatted = formatTimeWithoutSeconds(startTimeOne);
   const endTimeOneFormatted = formatTimeWithoutSeconds(endTimeOne);
@@ -37,7 +36,15 @@ timeForm.addEventListener("submit", (e) => {
   const durationOneFormatted = formatDuration(durationOne);
   const durationTwoFormatted = formatDuration(durationTwo);
 
-  const earliestStartTime = findEarliestStartTime(endTimeOne, endTimeTwo);
+  console.log(endTimeOne);
+  console.log(endTimeTwo);
+  console.log(maxDutyHours);
+
+  const earliestStartTime = findEarliestStartTime(
+    endTimeOne,
+    endTimeTwo,
+    maxDutyHours
+  );
   const latestFinishTime = findLatestFinishTime(startTimeOne);
   console.log(earliestStartTime);
 
@@ -133,20 +140,26 @@ function formatDecimalHoursToHHMM(decimalHours) {
 function findEndOfShift(endOne, endTwo) {
   let endOfShift; // Declare endOfShift variable
 
-  if (endTwo === "") {
+  if (endTwo === null) {
     endOfShift = endOne;
   } else {
     endOfShift = endTwo;
+  }
+  if (!(endOfShift instanceof Date) || isNaN(endOfShift.getTime())) {
+    throw new Error("Invalid end of shift time");
   }
   return endOfShift;
 }
 
 // Function to find the earliest start time based on the end times
-function findEarliestStartTime(endOne) {
-  const endOfShift = endOne;
+function findEarliestStartTime(endOne, endTwo, maxDutyHours) {
+  const endOfShift = findEndOfShift(endOne, endTwo);
   const earliestStartTime = endOfShift;
   earliestStartTime.setHours(earliestStartTime.getHours() - maxDutyHours);
 
+  if (isNaN(earliestStartTime.getTime())) {
+    throw new Error("Calculation resulted in invalid date");
+  }
   return earliestStartTime;
 }
 
