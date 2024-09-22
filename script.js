@@ -69,15 +69,6 @@ timeForm.addEventListener("submit", (e) => {
     totalDurationFormatted = formatDuration(totalDuration);
   }
 
-  // Output formatted durations
-  console.log("Formatted Duration One:", durationOneFormatted);
-  console.log("Formatted Duration Two:", durationTwoFormatted);
-  console.log("Total Duration:", totalDurationFormatted);
-
-  console.log(endTimeOne);
-  console.log(endTimeTwo);
-  console.log(maxDutyHours);
-
   const earliestStartTime = findEarliestStartTime(
     endTimeOne,
     endTimeTwo,
@@ -139,21 +130,7 @@ function normalize(inputTime) {
   }
   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
 }
-// function normalize(inputTime) {
-//   if (!inputTime) {
-//     return "";
-//   }
-//   let cleanedTime = inputTime.replace(":", "");
-//   //Handle values greater than 2359
-//   if (cleanedTime.length === 4) {
-//     cleanedTime = (parseInt(cleanedTime) - 2400).toString().padStart(4, "0");
-//   }
 
-//   if (cleanedTime.length < 4) {
-//     return cleanedTime.padStart(4, "0");
-//   }
-//   return `${cleanedTime.slice(0, 2)}:${cleanedTime.slice(2)}`;
-// }
 function formatDuration(milliseconds) {
   const hours = Math.floor(milliseconds / 3600000);
   const remainingMilliseconds = milliseconds % 3600000;
@@ -196,20 +173,6 @@ function findEndOfShift(endOne, endTwo) {
   // Return the later of the two times
   return endOne > endTwo ? endOne : endTwo;
 }
-
-// function findEndOfShift(endOne, endTwo) {
-//   let endOfShift; // Declare endOfShift variable
-
-//   if (endTwo === null) {
-//     endOfShift = endOne;
-//   } else {
-//     endOfShift = endTwo;
-//   }
-//   if (!(endOfShift instanceof Date) || isNaN(endOfShift.getTime())) {
-//     throw new Error("Invalid end of shift time");
-//   }
-//   return endOfShift;
-// }
 
 // Function to find the earliest start time based on the end times
 function findEarliestStartTime(endOne, endTwo, maxDutyHours) {
