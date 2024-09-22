@@ -10,29 +10,36 @@
 
 <body>
     <h1>TET Calculator</h1>
-    <form action="" id="timeForm">
-        <p>First or Only Piece</p>
-        <label for="input">Shift start:</label>
-        <input type="text" id="startOne" name="input" required="required">
-        <br>
-        <label for="input">Shift end:</label>
-        <input type="text" id="endOne" name="input" required="required">
-        <br>
-        <p>Second Piece</p>
-        <label for="input">Shift start:</label>
-        <input type="text" id="startTwo" name="input">
-        <br>
-        <label for="input">Shift end:</label>
-        <input type="text" id="endTwo" name="input">
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-    <div id="shiftOne">First piece details: </div>
-    <div id="shiftTwo">Second piece details: </div>
-    <div id="totalTime">Total shift time: </div>
-    <div id="allowOt">Hours available for OT: </div>
-    <div id="earliestStart">Earliest start time: </div>
-    <div id="latestFinish">Latest finish time: </div>
+    <div class="container">
+        <div class="formContainer">
+            <form action="" id="timeForm">
+                <p>First or Only Piece</p>
+                <label for="input">Shift start:</label>
+                <input type="text" id="startOne" name="input" required="required">
+
+                <label for="input">Shift end:</label>
+                <input type="text" id="endOne" name="input" required="required">
+
+                <p>Second Piece</p>
+                <label for="input">Shift start:</label>
+                <input type="text" id="startTwo" name="input">
+
+                <label for="input">Shift end:</label>
+                <input type="text" id="endTwo" name="input">
+
+                <input type="submit" value="Submit">
+
+            </form>
+        </div>
+        <div class="details">
+            <div id="shiftOne">First piece details: </div>
+            <div id="shiftTwo">Second piece details: </div>
+            <div id="totalTime">Total shift time: </div>
+            <div id="allowOt">Hours available for OT: </div>
+            <div id="earliestStart">Earliest start time: </div>
+            <div id="latestFinish">Latest finish time: </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 
