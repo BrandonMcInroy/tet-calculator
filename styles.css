@@ -39,16 +39,35 @@ form {
   width: 30rem;
 }
 
+form p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+}
+
 .input-group {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   margin-bottom: 10px;
-  width: 100%;
+}
+.input-group input {
+  width: 70%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: solid 1px rgb(0, 0, 0);
+  font-size: 1.5rem;
 }
 
 .input-group label {
+  width: 130px;
+  text-align: left;
   margin-right: 10px;
+}
+
+.input-box {
+  flex: 1;
+  max-width: 300px;
 }
 
 .details {
@@ -63,19 +82,10 @@ label {
   color: rgb(0, 0, 0);
 }
 
-/* input {
-  font-size: 1rem;
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid rgb(0, 0, 0);
-  width: 100%;
-  text-align: center;
-  align-content: flex-start;
-} */
-
 input[type="submit"] {
   display: flex;
   justify-content: center;
+  width: 100%;
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
   border: none;
