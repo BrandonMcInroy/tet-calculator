@@ -127,8 +127,10 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5eded;
-  height: 2rem;
+  color: white;
+  background: #0061aa;
+  font-weight: bold;
+  height: 2.5rem;
   width: 100%;
   position: fixed;
   left: 0;
