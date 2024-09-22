@@ -70,13 +70,6 @@ form p {
   max-width: 300px;
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 label {
   font-size: 1.5rem;
   color: rgb(0, 0, 0);
@@ -96,18 +89,22 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-#shiftOne,
-#shiftTwo {
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.detailLabel {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 1rem;
   width: 30rem;
 }
 
-#totalTime,
-#allowOt,
-#earliestStart,
-#latestFinish {
+span {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 1rem;
