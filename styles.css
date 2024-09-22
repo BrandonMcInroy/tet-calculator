@@ -17,7 +17,7 @@ body {
 h1 {
   font-size: 3rem;
   color: rgb(0, 0, 0);
-  padding: 20px;
+  padding: 0.5rem;
 }
 
 #timeForm {
@@ -85,4 +85,15 @@ input[type="submit"] {
   border-radius: 5px;
   padding: 1rem;
   width: 30rem;
+}
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5eded;
+  height: 2rem;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
