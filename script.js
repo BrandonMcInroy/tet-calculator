@@ -42,19 +42,37 @@ timeForm.addEventListener("submit", (e) => {
     endTimeTwoFormatted = "null";
   }
 
-  const durationOne = endTimeOne - startTimeOne;
-  let durationTwo;
+  // Assume durationOne and durationTwo are defined earlier
+  let durationOne = endTimeOne - startTimeOne;
+  let durationTwo = endTimeTwo - startTimeTwo;
 
-  if (endTimeTwoFormatted) {
-    durationTwo = endTimeTwo - startTimeTwo;
-  } else {
-    durationTwo = 0;
+  // Initialize variables
+  let totalDuration = 0;
+  let totalDurationFormatted = null;
+  let durationOneFormatted = null;
+  let durationTwoFormatted = null;
+
+  // Check if durationOne is valid
+  if (durationOne != null && durationOne >= 0) {
+    durationOneFormatted = formatDuration(durationOne);
+    totalDuration += durationOne; // Add durationOne to total
   }
 
-  const totalDuration = durationOne + durationTwo;
-  const totalDurationFormatted = formatDuration(totalDuration);
-  const durationOneFormatted = formatDuration(durationOne);
-  const durationTwoFormatted = formatDuration(durationTwo);
+  // Check if durationTwo is valid
+  if (durationTwo != null && durationTwo >= 0) {
+    durationTwoFormatted = formatDuration(durationTwo);
+    totalDuration += durationTwo; // Add durationTwo to total
+  }
+
+  // Now check if totalDuration is valid before formatting
+  if (totalDuration > 0) {
+    totalDurationFormatted = formatDuration(totalDuration);
+  }
+
+  // Output formatted durations
+  console.log("Formatted Duration One:", durationOneFormatted);
+  console.log("Formatted Duration Two:", durationTwoFormatted);
+  console.log("Total Duration:", totalDurationFormatted);
 
   console.log(endTimeOne);
   console.log(endTimeTwo);
@@ -102,11 +120,12 @@ timeForm.addEventListener("submit", (e) => {
   ).textContent = `Hours available for OT: ${formatDecimalHoursToHHMM(
     remainingDriveHours
   )}`;
-
-  console.log(findEndOfShift(endOne));
-
-  console.log(earliestStartTimeFormatted);
-  console.log(latestFinishTimeFormatted);
+  document.getElementById(
+    "earliestStart"
+  ).textContent = `Earliest start time: ${earliestStartTimeFormatted}`;
+  document.getElementById(
+    "latestFinish"
+  ).textContent = `Latest finish time: ${latestFinishTimeFormatted}`;
 });
 
 function normalize(inputTime) {
@@ -157,19 +176,40 @@ function formatDecimalHoursToHHMM(decimalHours) {
   const minutesString = formattedMinutes.toString().padStart(2, "0");
   return `${wholeHours}:${minutesString}`;
 }
-function findEndOfShift(endOne, endTwo) {
-  let endOfShift; // Declare endOfShift variable
 
-  if (endTwo === null) {
-    endOfShift = endOne;
-  } else {
-    endOfShift = endTwo;
+function findEndOfShift(endOne, endTwo) {
+  // Check if endOne is a valid Date
+  if (!(endOne instanceof Date) || isNaN(endOne.getTime())) {
+    throw new Error("Invalid end of shift time for endOne");
   }
-  if (!(endOfShift instanceof Date) || isNaN(endOfShift.getTime())) {
-    throw new Error("Invalid end of shift time");
+
+  // If endTwo is not provided (null or empty), return endOne
+  if (!endTwo) {
+    return endOne;
   }
-  return endOfShift;
+
+  // Check if endTwo is a valid Date
+  if (!(endTwo instanceof Date) || isNaN(endTwo.getTime())) {
+    throw new Error("Invalid end of shift time for endTwo");
+  }
+
+  // Return the later of the two times
+  return endOne > endTwo ? endOne : endTwo;
 }
+
+// function findEndOfShift(endOne, endTwo) {
+//   let endOfShift; // Declare endOfShift variable
+
+//   if (endTwo === null) {
+//     endOfShift = endOne;
+//   } else {
+//     endOfShift = endTwo;
+//   }
+//   if (!(endOfShift instanceof Date) || isNaN(endOfShift.getTime())) {
+//     throw new Error("Invalid end of shift time");
+//   }
+//   return endOfShift;
+// }
 
 // Function to find the earliest start time based on the end times
 function findEarliestStartTime(endOne, endTwo, maxDutyHours) {
