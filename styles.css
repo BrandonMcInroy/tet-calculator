@@ -39,6 +39,14 @@ h1 {
   padding: 0.5rem;
 }
 
+.detailLabel,
+.details,
+form {
+  width: 100%;
+  max-width: 30rem;
+  min-width: 15rem;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -117,7 +125,7 @@ input[type="submit"] {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 0.5rem;
-  width: 30rem;
+
   font-size: 1.1rem;
   font-weight: bold;
 }
@@ -168,4 +176,15 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+  form,
+  .detailLabel,
+  .details {
+    width: 100%;
+  }
 }
